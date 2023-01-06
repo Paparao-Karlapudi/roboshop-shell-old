@@ -13,4 +13,3 @@ location /api/payment/ { proxy_pass http://localhost:8080/; }
 location /health {
   stub_status on;
   access_log off;
-}

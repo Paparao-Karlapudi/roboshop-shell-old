@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##### Change these values ###
-ZONE_ID="Z100843328BJM5H0SW95"
+ZONE_ID="Z0366464237Z7LZLZPKFA"
 DOMAIN="pappikdev.in"
 SG_NAME="allow-all"
 env=dev

@@ -8,10 +8,12 @@ rm -rf /app/*
 cd /app
 unzip /tmp/catalogue.zip
 npm install
+
 cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service
 systemctl daemon-reload
 systemctl enable catalogue
 systemctl start catalogue
+
 cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo
 yum install mongodb-org-shell -y
 mongo --host mongodb-dev.pappikdev.in </app/schema/catalogue.js

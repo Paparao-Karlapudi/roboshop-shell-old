@@ -7,17 +7,17 @@ echo $?
 
 echo -e "\e[35m Remove Nginx Old content \e[0m"
 rm -rf /usr/share/nginx/html/* &>>${LOG}
-echo &?
+echo $?
 
 echo -e "\e[Download Frontend Content\e[0m"
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>${LOG}
-eco &?
+echo $?
 
 cd /usr/share/nginx/html
 
 echo -e "\e[35m Extract Frontend Content\e[0m"
 unzip /tmp/frontend.zip &>>${LOG}
-echo &?
+echo $?
 
 echo -e "\e[35m Copy config files\e[0m"
 cp "$script_location"/files/frontend-roboshop /etc/nginx/default.d/roboshop.conf

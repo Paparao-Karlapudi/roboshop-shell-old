@@ -1,8 +1,8 @@
 source common.sh
-echo -e "\e[35m Install Nginx\e[0m"
+print "Install Nginx"
 yum install nginx -y &>>${LOG}
 
-echo -e "\e[35m Remove Nginx Old content \e[0m"
+print "Remove Nginx Old Content"
 rm -rf /usr/share/nginx/html/* &>>${LOG}
 status_check()
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip

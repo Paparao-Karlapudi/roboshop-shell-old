@@ -15,7 +15,6 @@ echo -e "\e[35m Remove Nginx Old content \e[0m"
 rm -rf /usr/share/nginx/html/* &>>${LOG}
 status_check()
 
-echo -e "\e[33m Download Frontend Content\e[0m"
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>${LOG}
 status_check()
 cd /usr/share/nginx/html

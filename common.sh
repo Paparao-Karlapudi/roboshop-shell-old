@@ -1,6 +1,6 @@
 script_location=$(pwd)
 LOG=/tmp/roboshop.log
-status_check(){
+status_check() {
   if [ $? -eq 0 ]; then
     echo -e "\e[32m SUCCESS \e[0m"
   else
@@ -8,6 +8,6 @@ status_check(){
   fi
 }
 
-print(){
+print() {
   echo -e "\e[33m $1 \e[0m"
 }

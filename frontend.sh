@@ -1,6 +1,6 @@
 source common.sh
 
-echo -e "\e[35m Install Nginx\e[0m"
+echo -e "\e[35m Install Nginx \e[0m"
 yum install nginx -y &>>${LOG}
 
 echo -e "\e[35m Remove Nginx Old content \e[0m"

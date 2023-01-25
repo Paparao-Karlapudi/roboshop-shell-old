@@ -29,13 +29,13 @@ npm install &>>${LOG}
  print "copying script"
 cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service &>>${LOG}
 
- print" Daemon reloading"
+ print  "Daemon reloading"
 systemctl daemon-reload &>>${LOG}
 
  print "Enabling catalogue"
 systemctl enable catalogue &>>${LOG}
 
- print"starting catalogue"
+ print "starting catalogue"
 systemctl start catalogue &>>${LOG}
 
  print "copy mongo repo"

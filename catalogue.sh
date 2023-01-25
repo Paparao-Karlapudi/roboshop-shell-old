@@ -1,47 +1,47 @@
-echo -e "\e[35m Configuring nodejs repos\e[0m"
+ print "Configuring nodejs repos"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${LOG}
 
-echo -e "\e[35m Install nodejs\e[0m"
+ print "Install nodejs"
 yum install nodejs -y &>>${LOG}
 
-echo -e "\e[35m adding user\e[0m"
+ print "adding user"
 useradd roboshop &>>${LOG}
 
-echo -e "\e[35m maing aap dir\e[0m"
+ print "making aap dir"
 mkdir -p /app &>>${LOG}
 
-echo -e "\e[ downloading zip \e[0m"
+print "downloading zip"
 curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${LOG}
 
-echo -e "\e[35m removing prev files \e[0m"
+ print "removing prev files"
 rm -rf /app/* &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print "cd to app"
 cd /app
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print "unzip catalogue file"
 unzip /tmp/catalogue.zip &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print "npm installing"
 npm install &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print "copying script"
 cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print" Daemon reloading"
 systemctl daemon-reload &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print "Enabling catalogue"
 systemctl enable catalogue &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print"starting catalogue"
 systemctl start catalogue &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print "copy mongo repo"
 cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print "install mongo org-shell"
 yum install mongodb-org-shell -y &>>${LOG}
 
-echo -e "\e[35m Install Nginx\e[0m"
+ print "uploading schema"
 mongo --host mongodb-dev.pappikdev.in </app/schema/catalogue.js &>>${LOG}

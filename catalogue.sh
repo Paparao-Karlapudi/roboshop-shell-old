@@ -8,9 +8,10 @@ status_check
 yum install nodejs -y &>>${LOG}
 status_check
 
- print "adding user"
- id roboshop &>>${LOG}
-if [ &? -ne 0 ]; then
+print "adding user"
+id roboshop &>>${LOG}
+if [ &? -ne 0 ];
+then
    useradd roboshop &>>${LOG}
 fi
 status_check

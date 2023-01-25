@@ -4,7 +4,7 @@ print "Install Nginx"
 yum install nginx -y &>>${LOG}
 status_check
 
-print "Remove Nginx Old content"
+print "Remove Nginx Old content "
 rm -rf /usr/share/nginx/html/* &>>${LOG}
 status_check
 

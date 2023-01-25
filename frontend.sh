@@ -25,5 +25,6 @@ status_check
 print " Enable Nginx "
 systemctl enable nginx &>>${LOG}
 status_check
+
 print Restart Nginx 
 systemctl restart nginx &>>${LOG}

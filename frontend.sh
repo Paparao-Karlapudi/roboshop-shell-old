@@ -29,5 +29,5 @@ print "Copy config files"
 cp "$script_location"/files/frontend-roboshop /etc/nginx/default.d/roboshop.conf
 status_check
 
-print Restart Nginx 
+print "Restart Nginx"
 systemctl restart nginx &>>${LOG}

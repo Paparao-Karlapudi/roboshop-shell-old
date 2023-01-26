@@ -1,5 +1,5 @@
- source common.sh
+source common.sh
 
- component=catalogue
+component=catalogue
 
- Nodejs
+Nodejs

@@ -68,7 +68,7 @@ Nodejs() {
    print "starting ${component}"
   systemctl start ${component} &>>${LOG}
   status_check
-
+  if [${schema_load} == "true"]; then
    print "copy mongo repo"
   cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
   status_check
@@ -80,4 +80,5 @@ Nodejs() {
    print "uploading schema"
   mongo --host mongodb-dev.pappikdev.in </app/schema/${component}.js &>>${LOG}
   status_check
+  fi
 }

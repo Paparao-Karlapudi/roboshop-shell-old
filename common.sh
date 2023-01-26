@@ -45,7 +45,7 @@ Nodejs() {
   cd /app
   status_check
 
-   print "unzip user file"
+   print "unzip ${component} file"
   unzip /tmp/${component}.zip &>>${LOG}
   status_check
 

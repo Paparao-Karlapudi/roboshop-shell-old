@@ -4,6 +4,13 @@ print "Install Nginx"
 yum install nginx -y &>>${LOG}
 status_check
 
+print " Enable Nginx "
+systemctl enable nginx &>>${LOG}
+status_check
+
+print start Nginx
+systemctl start nginx &>>${LOG}
+
 print "Remove Nginx Old content "
 rm -rf /usr/share/nginx/html/* &>>${LOG}
 status_check
@@ -20,10 +27,6 @@ status_check
 
 print "Copy config files"
 cp "$script_location"/files/frontend-roboshop /etc/nginx/default.d/roboshop.conf
-status_check
-
-print " Enable Nginx "
-systemctl enable nginx &>>${LOG}
 status_check
 
 print Restart Nginx 

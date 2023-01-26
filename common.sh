@@ -68,7 +68,7 @@ Nodejs() {
    print "starting ${component}"
   systemctl start ${component} &>>${LOG}
   status_check
-  if [${schema_load} == "true"]; then
+  if [ ${schema_load} == "true" ]; then
    print "copy mongo repo"
   cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
   status_check

@@ -23,8 +23,7 @@ Nodejs() {
 
   print "adding user"
   id roboshop &>>${LOG}
-  if [ &? -ne 0 ];
-  then
+  if [ &? -ne 0 ]; then
      useradd roboshop &>>${LOG}
   fi
   status_check

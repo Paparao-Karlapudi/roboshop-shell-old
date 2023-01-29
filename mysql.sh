@@ -7,14 +7,14 @@ print "Disable mySQL default module"
 dnf module disable mysql -y &>>${LOG}
 status_check
 
-print"Copy mysql repo file"
+print "Copy mysql repo file"
 cp ${script_location}/files/mysql.repo /etc/yum.repos.d/myswl.repo &>>${LOG}
 status_check
 
 print "Install MySQL server"
 yum install mysql-community-server -y &>>${LOG}
 
-print"Enable Mysql"
+print "Enable Mysql"
 systemctl enable mysqld &>>${LOG}
 
 print "start Mysql"

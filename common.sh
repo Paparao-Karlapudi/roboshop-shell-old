@@ -11,47 +11,26 @@ status_check() {
 print() {
   echo -e "\e[33m $1 \e[0m"
 }
+LOAD_SCHEMA()
+{
+  if [ ${schema_load} == "true" ]; then
+    if [ ${schema_type} == "mongo" ]; then
+     print "copy mongo repo"
+    cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
+    status_check
 
-Nodejs() {
-   print "Configuring nodejs repos"
-  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${LOG}
-  status_check
+     print "install mongo org-shell"
+    yum install mongodb-org-shell -y &>>${LOG}
+    status_check
 
-   print "Install nodejs"
-  yum install nodejs -y &>>${LOG}
-  status_check
-
-  print "adding user"
-  id roboshop &>>${LOG}
-  if [ $? -ne 0 ];
-  then
-     useradd roboshop &>>${LOG}
+     print "uploading schema"
+    mongo --host mongodb-dev.pappikdev.in </app/schema/${component}.js &>>${LOG}
+    status_check
+    fi
   fi
-  status_check
+}
 
-   print "making app dir"
-  mkdir -p /app &>>${LOG}
-  status_check
-
-  print "downloading zip"
-  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${LOG}
-  status_check
-
-   print "removing prev files"
-  rm -rf /app/* &>>${LOG}
-  status_check
-
-   print "cd to app"
-  cd /app
-  status_check
-
-   print "unzip ${component} file"
-  unzip /tmp/${component}.zip &>>${LOG}
-  status_check
-
-   print "npm installing"
-  npm install &>>${LOG}
-  status_check
+SYSTEMD_SERVICE() {
 
    print "copying script"
   cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service &>>${LOG}
@@ -68,17 +47,69 @@ Nodejs() {
    print "starting ${component}"
   systemctl start ${component} &>>${LOG}
   status_check
-  if [ ${schema_load} == "true" ]; then
-   print "copy mongo repo"
-  cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
+}
+
+APP_PREREQ() {
+    print "adding user"
+    id roboshop &>>${LOG}
+    if [ $? -ne 0 ];
+    then
+       useradd roboshop &>>${LOG}
+    fi
+    status_check
+
+     print "making app dir"
+    mkdir -p /app &>>${LOG}
+    status_check
+
+    print "downloading zip"
+    curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>${LOG}
+    status_check
+
+     print "removing prev files"
+    rm -rf /app/* &>>${LOG}
+    status_check
+
+    print "Extracting ${component} file"
+    cd /app
+    unzip /tmp/${component}.zip &>>${LOG}
+    status_check
+}
+
+Nodejs() {
+   print "Configuring nodejs repos"
+  curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${LOG}
   status_check
 
-   print "install mongo org-shell"
-  yum install mongodb-org-shell -y &>>${LOG}
+   print "Install nodejs"
+  yum install nodejs -y &>>${LOG}
   status_check
 
-   print "uploading schema"
-  mongo --host mongodb-dev.pappikdev.in </app/schema/${component}.js &>>${LOG}
+  APP_PREREQ
+
+   print "npm installing"
+  npm install &>>${LOG}
   status_check
-  fi
+
+SYSTEMD_SERVICE
+
+LOAD_SCHEMA
+}
+
+MAVEN(){
+  print "Install maven"
+  yum install maven -y &>>${LOG}
+  status_check
+
+  APP_PREREQ
+
+  print "Build a Package"
+  mvn clean package &>>${LOG}
+  status_check
+
+  print "Copy App file to App location"
+  mv target/${component}-1.0.jar ${component}.jar &>>${LOG}
+  status_check
+
+  SYSTEMD_SERVICE
 }

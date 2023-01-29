@@ -27,6 +27,17 @@ LOAD_SCHEMA()
     mongo --host mongodb-dev.pappikdev.in </app/schema/${component}.js &>>${LOG}
     status_check
     fi
+
+    if [ ${schema_type} == "mysql" ]; then
+
+         print "install mysql client"
+        yum install mysql -y &>>${LOG}
+        status_check
+
+         print "uploading schema"
+       mongo --host mongodb-dev.pappikdev.in </app/schema/user.js &>>${LOG}
+        status_check
+        fi
   fi
 }
 

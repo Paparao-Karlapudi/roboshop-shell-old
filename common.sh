@@ -15,7 +15,7 @@ LOAD_SCHEMA()
 {
   if [ ${schema_load} == "true" ]; then
     if [ ${schema_type} == "mongo" ]; then
-     print "copy mongo repo"
+     print "copy mongo repo file"
     cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${LOG}
     status_check
 

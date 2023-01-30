@@ -31,17 +31,17 @@ LOAD_SCHEMA()
     if [ ${schema_type} == "mysql" ]; then
 
          print "install mysql client"
-        yum install mysql -y &>>${LOG}
-        status_check
+         yum install mysql -y &>>${LOG}
+         status_check
 
          print "uploading schema"
-       mongo --host mongodb-dev.pappikdev.in </app/schema/user.js &>>${LOG}
-        status_check
+         mysql -h mysql-dev.pappikdev.in -uroot -p${root_mysql_password} < /app/schema/shipping.sql  &>>${LOG}
+         status_check
         fi
   fi
 }
 
-SYSTEMD_SERVICE() {
+SYSTEMD_SETUP() {
 
    print "copying script"
   cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service &>>${LOG}
@@ -122,5 +122,7 @@ MAVEN(){
   mv target/${component}-1.0.jar ${component}.jar &>>${LOG}
   status_check
 
-  SYSTEMD_SERVICE
+  SYSTEMD_SETUP
+
+  LOAD_SCHEMA
 }

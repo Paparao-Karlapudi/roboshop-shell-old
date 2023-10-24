@@ -2,7 +2,7 @@
 
 ##### Change these values ###
 ZONE_ID="Z0366464237Z7LZLZPKFA"
-DOMAIN="pappikdev.in"
+DOMAIN="pappik.online"
 SG_NAME="allow-all"
 env=dev
 #############################
